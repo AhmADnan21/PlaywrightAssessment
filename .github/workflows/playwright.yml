@@ -42,3 +42,22 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      - name: Send email notification
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Playwright Automation Result
+          to: ahmad.abdullah.777.777@gmail.com
+          from: ahmad.abdullah.777.777@gmail.com
+          body: |
+            Playwright daily automation completed.
+
+            Status:
+            ${{ job.status }}
+
+            Check GitHub Actions for the full report.
