@@ -3,6 +3,7 @@ name: Playwright Tests
 on:
   push:
     branches: [main]
+
   pull_request:
     branches: [main]
 
@@ -22,7 +23,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
@@ -31,7 +32,7 @@ jobs:
         run: npx playwright test
 
       - name: Upload Playwright report
-        if: ${{ !cancelled() }}
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
