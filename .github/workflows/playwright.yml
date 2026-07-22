@@ -4,11 +4,10 @@ on:
   push:
     branches: [main]
 
-  pull_request:
-    branches: [main]
-
   schedule:
     - cron: '0 9 * * *'
+
+  workflow_dispatch:
 
 jobs:
   test:
@@ -51,7 +50,7 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: Playwright Automation Result
+          subject: "Playwright Test Result - ${{ job.status }}"
           to: ahmad.abdullah.777.777@gmail.com
           from: ahmad.abdullah.777.777@gmail.com
           body: |
@@ -60,4 +59,5 @@ jobs:
             Status:
             ${{ job.status }}
 
-            Check GitHub Actions for the full report.
+            Report URL:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
